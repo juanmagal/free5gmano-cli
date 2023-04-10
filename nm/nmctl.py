@@ -410,15 +410,15 @@ def deallocate_nssi(nss_instance_id):
 @click.option('-f', '--file', help='Your request file.(.json or .yaml)')
 def create_moi(model_name, data, file):
     if data is not None:
-        response = nm_api.create_moi(model_name, data)
+        response = api.create_moi(model_name, data)
     else:
         request_file = open(file, 'r')
         if file in '.json':
-            response = nm_api.create_moi(model_name, request_file.read())
+            response = api.create_moi(model_name, request_file.read())
         else:
             json_request = yaml.load(request_file.read(), Loader=yaml.FullLoader)
             json_request.replace("'", '"')
-            response = nm_api.create_moi(model_name, json_request)
+            response = api.create_moi(model_name, json_request)
     if response.status_code == 201:
         click.echo('OperationSucceeded')
     elif response.status_code == 400:
@@ -437,7 +437,7 @@ def create_moi(model_name, data, file):
 @click.option('-filter', '--filter', default='', help='DB response filter.')
 @click.option('-o', '--output', default='json', help='Select output type.')
 def get_moi_attributes(model_name, identify, scope_type, scope_level, filter, output):
-    response = nm_api.get_moi_attributes(model_name, identify, scope_type, scope_level, filter)
+    response = api.get_moi_attributes(model_name, identify, scope_type, scope_level, filter)
 
     if response.status_code == 200:
         if response.json()['attributeListOut']:
@@ -484,11 +484,11 @@ def get_moi_attributes(model_name, identify, scope_type, scope_level, filter, ou
 def modify_moi_attributes(model_name, identify, scope_type, scope_level, filter, output, data,
                           file):
     if data is not None:
-        response = nm_api.modify_moi_attributes(model_name, identify, scope_type, scope_level,
+        response = api.modify_moi_attributes(model_name, identify, scope_type, scope_level,
                                                 filter, data)
     else:
         request_file = open(file, 'r')
-        response = nm_api.modify_moi_attributes(model_name, identify, scope_type, scope_level,
+        response = api.modify_moi_attributes(model_name, identify, scope_type, scope_level,
                                                 filter, request_file.read())
 
     if response.status_code == 200:
@@ -532,7 +532,7 @@ def modify_moi_attributes(model_name, identify, scope_type, scope_level, filter,
 @click.option('-filter', '--filter', default='', help='DB response filter.')
 @click.option('-o', '--output', default='json', help='Select output type.')
 def delete_moi(model_name, identify, scope_type, scope_level, filter, output):
-    response = nm_api.delete_moi(model_name, identify, scope_type, scope_level, filter)
+    response = api.delete_moi(model_name, identify, scope_type, scope_level, filter)
 
     if response.status_code == 200:
         if response.json()['deletionList']:
