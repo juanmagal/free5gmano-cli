@@ -169,16 +169,16 @@ def create_template(template_type, nfvo):
         download = click.confirm('Do you want to download example?')
         if download:
             example_type = click.prompt('Choice example what you want to download. Default is free5gc-stage-1 ', default='free5gc-stage-1', 
-                type=click.Choice(['free5gc-stage-1', 'free5gc-stage-2', 'free5gc-stage-2-kubevirt', 'free5gc-stage-3.0.4'], case_sensitive=False), show_choices=True)
+                type=click.Choice(['free5gc-stage-1', 'free5gc-stage-2', 'free5gc-stage-2-kubevirt', 'free5gc-stage-3.0.4', 'free5gc-stage-3.2.1'], case_sensitive=False), show_choices=True)
             if example_type:
                 click.echo('Downloading...')
                 download_obj = api.download_template(template_type,example_type)
-                with zipfile.ZipFile(io.BytesIO(download_obj.content)) as zf:
+                with zipfile.ZipFile(io.BytesIO(download_obj.content)) as zf::q!
                     zf.extractall(path=os.path.join(os.getcwd(), template_type))
                 click.echo('OperationSucceeded, template example created in this directory.')
         else:
             click.echo('OperationSucceeded')
-        click.echo('Template Id: ' + response.json()['templateId'])
+            click.echo('Template Id: ' + response.json()['templateId'])
     else:
         click.echo('OperationFailed')
 
@@ -390,7 +390,7 @@ def allocate_nssi(nss_template_id):
             }
             response = api.allocate_nssi(json.dumps(data))
             click.echo('OperationSucceeded')
-            click.echo('Nssi ID: {}'.format(response.json()['nSSIId']))
+            # click.echo('Nssi ID: {}'.format(response.json()['nSSIId']))
 
 
 @deallocate.command('nssi')
