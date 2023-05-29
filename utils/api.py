@@ -33,21 +33,21 @@ def create_moi(model_name, data):
 
 
 def get_moi_attributes(model_name, identify, scope_type, scope_level, _filter):
-    get_moi_url = nm_url.format(model_name, identify)
+    get_moi_url = nm_url.format(model_name, identify, '')
     scope = '["' + scope_type + '",' + str(get_scope_level(scope_type, scope_level)) + ']'
     params = {'scope': scope, 'filter': _filter}
     return requests.get(get_moi_url, params=params, headers=headers)
 
 
 def modify_moi_attributes(model_name, identify, scope_type, scope_level, filter, data):
-    modify_moi_url = nm_url.format(model_name, identify)
+    modify_moi_url = nm_url.format(model_name, identify,'')
     scope = '["' + scope_type + '",' + str(get_scope_level(scope_type, scope_level)) + ']'
     params = {'scope': scope, 'filter': filter}
     return requests.patch(modify_moi_url, data=data, params=params, headers=headers)
 
 
 def delete_moi(model_name, identify, scope_type, scope_level, filter):
-    delete_moi_url = nm_url.format(model_name, identify)
+    delete_moi_url = nm_url.format(model_name, identify, '')
     scope = '["' + scope_type + '",' + str(get_scope_level(scope_type, scope_level)) + ']'
     params = {'scope': scope, 'filter': filter}
     return requests.delete(delete_moi_url, params=params, headers=headers)
